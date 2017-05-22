@@ -10,7 +10,7 @@ const employerSchema = new Schema({
         },
         address: String,
         phone: String,
-        jobs: {}
+        description: String
 });
 
 //middelware ---------------

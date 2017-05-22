@@ -8,19 +8,18 @@
             <th>Employer</th>
             <th>Contact Number</th>
             <th>Address</th>
-            <th></th>
         </tr>
     </thead>
 
     <tbody>
         <% for (var employer of employers) { %>
             <tr>
-                <td><%= employer.name %></td>
+                <td><a href="/employers/<%= employer.slug %>"><%= employer.name %></a></td>
                 <td><%= employer.phone%></td>
                 <td><%= employer.address%></td>
-                <td>
+                <!--<td>
                     <a href="/employers/<%= employer.slug %>" class="btn btn-sm btn-primary"><%= employer.name %> Jobs</a>
-                </td>
+                </td>-->
             </tr>
 
         <% } %>

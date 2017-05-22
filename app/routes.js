@@ -15,8 +15,13 @@ router.get('/', mainController.showHome);
 router.get('/jobs', jobsController.showJobs);
 router.get('/jobs/addJob', jobsController.addJob);
 router.post('/jobs/addJob', jobsController.processAddJob);
-router.get('/jobs/:id', jobsController.singleJob);
+
 //employer routes
 router.get('/employers', employersController.showEmployers);
 router.get('/employers/seed', employersController.seedEmployers);
+router.get('/employers/addEmployer', employersController.addEmployer);
+router.post('/employers/addEmployer', employersController.processAddEmployer);
+
+//slug based routes that have to be at the end
 router.get('/employers/:slug', employersController.showOneEmployer);
+router.get('/jobs/:id', jobsController.singleJob);

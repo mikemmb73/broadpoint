@@ -4,7 +4,9 @@ const Job = require('../models/jobs');
 module.exports = {
     showEmployers: showEmployers,
     showOneEmployer: showOneEmployer,
-    seedEmployers: seedEmployers
+    seedEmployers: seedEmployers,
+    addEmployer: addEmployer,
+    processAddEmployer: processAddEmployer
 }
 
 function showEmployers (req, res) {
@@ -13,7 +15,7 @@ function showEmployers (req, res) {
     Employer.find({},(err,employers) => {
         if(err){
             res.status(404);
-            res.send("Found 0 Employers");
+            res.send("No Employers Found");
         }
 
         // render the employers list
@@ -54,4 +56,25 @@ function seedEmployers (req, res) {
     }
 
     res.send("database seeded");
+}
+
+function addEmployer (req, res) {
+    res.render('pages/addEmployer');
+}
+
+// process the job addition form
+function processAddEmployer(req, res) {
+    const employer = new Employer({
+        name: req.body.name,
+        phone: req.body.phone,
+        address: req.body.address,
+        description: req.body.description,
+    });
+
+    //save the job
+    employer.save((err) => {
+        if(err)
+            throw err;
+        res.redirect(`/employers/${employer.slug}`)
+    });
 }

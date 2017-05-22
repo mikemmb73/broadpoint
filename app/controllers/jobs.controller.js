@@ -42,7 +42,7 @@ function addJob (req, res) {
         if(err){
             res.status(404);
             res.send("Found 0 Employers");
-            res.render("pages/addJob", {employers: []});
+            res.render("pages/addJob", {employers: {}});
         }
         res.render('pages/addJob', {employers : employers});
     });
