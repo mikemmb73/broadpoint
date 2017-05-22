@@ -1,0 +1,36 @@
+<jumbotron class="text-center">
+    <h1>Add New Job</h1>
+</jumbotron>
+
+<div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+
+        <form action="/jobs/addJob" method="POST">
+
+            <div class="form-group">
+                <label>Job Name</label>
+                <input type="text" name="name" class=""form-control>
+            </div>
+
+            <div class="form-group">
+                <textarea name="description" cols="30" rows="2" class="form-control"></textarea>
+            </div>
+
+            <!-- choose the employer -->
+            <div class="form-group">
+                <span class="dropdown">
+                    <select name="company" class="custom-dropdown__select custom-dropdown__select--white">
+                        <% for (var employer of employers){%>
+                        <option><%= employer.name %></option>
+                        <% } %>
+                    </select>
+                </span>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-success btn-lg">Add Job</button>
+            </div>
+        </form>
+
+    </div>
+</div>

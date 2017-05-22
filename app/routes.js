@@ -10,10 +10,13 @@ module.exports = router;
 
 //define routes
 router.get('/', mainController.showHome);
+
+//job routes
 router.get('/jobs', jobsController.showJobs);
-//router.get('/job/addJob', jobsController.addJob);
+router.get('/jobs/addJob', jobsController.addJob);
+router.post('/jobs/addJob', jobsController.processAddJob);
+router.get('/jobs/:id', jobsController.singleJob);
+//employer routes
 router.get('/employers', employersController.showEmployers);
 router.get('/employers/seed', employersController.seedEmployers);
-
-//show individual employer
 router.get('/employers/:slug', employersController.showOneEmployer);

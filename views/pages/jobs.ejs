@@ -7,7 +7,7 @@
         <tr>
             <th>Job</th>
             <th>Employer</th>
-            <th>Description</th>
+            <!--<th>Description</th>-->
             <th>Requirements</th>
         </tr>
     </thead>
@@ -15,9 +15,9 @@
     <tbody>
         <% for (var job of jobs) { %>
             <tr>
-                <td><%= job.name %></td>
+                <td><a href="/jobs/<%= job['_id']%>"><%= job.name %></a></td>
                 <td><a href="/employers/<%= job.employerSlug %>"><%= job.employer%></a></td>
-                <td><%= job.description %></td>
+                <!--<td><%= job.description %></td>-->
                 <td><% for (var i = 0; i < job.requirements.length; i++){%>
                     <li><%= job.requirements[i] %></li>
                     <% } %>

@@ -12,7 +12,7 @@ const jobSchema = new Schema({
         },
         description: String,
         requirements: [String],
-        cantidates: [String]
+        candidates: [String]
 });
 
 //middleware ---------------
@@ -20,6 +20,7 @@ const jobSchema = new Schema({
 //make sure the slug is created from the name
 jobSchema.pre('save', function(next) {
         this.slug = slugify(this.employer + "-" + this.name);
+        this.employerSlug = slugify(this.employer);
         next();
 });
 
