@@ -11,7 +11,7 @@ module.exports = router;
 //define routes
 router.get('/', mainController.showHome);
 router.get('/jobs', jobsController.showJobs);
-router.get('/jobs/seed', jobsController.seedJobs);
+//router.get('/job/addJob', jobsController.addJob);
 router.get('/employers', employersController.showEmployers);
 router.get('/employers/seed', employersController.seedEmployers);
 

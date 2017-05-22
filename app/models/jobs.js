@@ -5,6 +5,7 @@ const mongoose = require('mongoose'),
 const jobSchema = new Schema({
         name: String,
         employer: String,
+        employerSlug: String,
         slug: {
                 type: String,
                 unique: true
@@ -18,7 +19,7 @@ const jobSchema = new Schema({
 
 //make sure the slug is created from the name
 jobSchema.pre('save', function(next) {
-        this.slug = slugify(this.employer + this.name);
+        this.slug = slugify(this.employer + "-" + this.name);
         next();
 });
 

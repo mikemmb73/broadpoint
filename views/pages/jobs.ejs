@@ -1,0 +1,29 @@
+<div class="jumbotron text-center">
+    <h1>All Jobs</h1>
+</div>
+
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th>Job</th>
+            <th>Employer</th>
+            <th>Description</th>
+            <th>Requirements</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% for (var job of jobs) { %>
+            <tr>
+                <td><%= job.name %></td>
+                <td><a href="/employers/<%= job.employerSlug %>"><%= job.employer%></a></td>
+                <td><%= job.description %></td>
+                <td><% for (var i = 0; i < job.requirements.length; i++){%>
+                    <li><%= job.requirements[i] %></li>
+                    <% } %>
+                </td>
+            </tr>
+
+        <% } %>
+    </tbody>
+</table>

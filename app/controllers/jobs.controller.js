@@ -6,7 +6,6 @@ module.exports = {
 };
 
 function showJobs (req, res) {
-        res.send("The jobs will be here");
         Job.find({}, (err,jobs) => {
             if(err){
                 res.status(404);
@@ -16,6 +15,8 @@ function showJobs (req, res) {
             res.render('pages/jobs', {jobs: jobs});
         });
 }
+
+
 
 // seed our db
 function seedJobs (req, res) {
