@@ -2,6 +2,7 @@
     <h1>Add New Job</h1>
 </jumbotron>
 
+<!-- script for below -->
 <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
 
@@ -25,6 +26,46 @@
                         <% } %>
                     </select>
                 </span>
+            </div>
+
+            <!-- script that manages the multiple choice box -->
+            <script type="text/javascript">
+                function selectRequirement(select){
+                    var option = select.options[select.selectedIndex];
+                    var ul = select.parentNode.getElementsByTagName('ul')[0];
+
+                    var choices = ul.getElementsByTagName('input');
+                    for (var i = 0; i < choices.length; i++)
+                    if (choices[i].value == option.value)
+                    return;
+
+                    var li = document.createElement('li');
+                    var input = document.createElement('input');
+                    var text = document.createTextNode(option.firstChild.data);
+
+                    input.type = 'hidden';
+                    input.name = 'requirements';
+                    input.value = option.value;
+
+                    li.appendChild(input);
+                    li.appendChild(text);
+                    li.setAttribute('onclick', 'this.parentNode.removeChild(this);');
+
+                    ul.appendChild(li);
+                }
+            </script>
+
+            <!-- choose the requirements for the job -->
+            <div class="form-group">
+                <ul name="items">
+                     <li onclick="this.parentNode.removeChild(this);">
+                     <input type="hidden" name="requirements" value="PHP" />PHP</li>
+                </ul>
+                <select onchange="selectRequirement(this);">
+                    <% for (var requirement of requirements){%>
+                    <option value="<%= requirement.name %>"><%= requirement.name %></option>
+                    <% } %>
+                </select>
             </div>
 
             <div class="form-group">

@@ -8,7 +8,7 @@ const jobSchema = new Schema({
         employerSlug: String,
         slug: {
                 type: String,
-                unique: true
+                unique: false
         },
         description: String,
         requirements: [String],

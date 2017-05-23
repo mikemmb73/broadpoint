@@ -1,5 +1,6 @@
 const Job = require('../models/jobs');
 const Employer = require('../models/employers');
+const Requirement = require('../models/requirements');
 
 module.exports = {
     showJobs: showJobs,
@@ -38,13 +39,18 @@ function singleJob (req, res) {
 }
 
 function addJob (req, res) {
-    Employer.find({},(err,employers) => {
-        if(err){
-            res.status(404);
-            res.send("Found 0 Employers");
-            res.render("pages/addJob", {employers: {}});
-        }
-        res.render('pages/addJob', {employers : employers});
+    Requirement.find({}, (err1, requirements) =>{
+        if(err1)
+            throw err1;
+
+        Employer.find({},(err,employers) => {
+            if(err){
+                res.status(404);
+                res.send("Found 0 Employers");
+                res.render("pages/addJob", {employers: {}});
+            }
+            res.render('pages/addJob', {employers : employers, requirements: requirements});
+        });
     });
 }
 
@@ -53,9 +59,11 @@ function processAddJob(req, res) {
     const job = new Job({
         name: req.body.name,
         description: req.body.description,
-        employer: req.body.company
-    });
+        employer: req.body.company,
+        requirements: req.body.requirements
 
+    });
+    console.log(req.body.requirement);
     //save the job
     job.save((err) => {
         if(err)
