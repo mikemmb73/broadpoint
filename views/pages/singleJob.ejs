@@ -34,6 +34,8 @@
                 <td><% for (var i = 0; i < job.candidates.length; i++){%>
                     <li><a href="/candidates/<%= job.candidateId[i]%>"><%= job.candidates[i] %></a></li>
                     <% } %>
+                    <a href="/jobs/assignCandidate/<%=job['_id']%>" class="btn btn-success" name="assignCandidate">Assign Candidate</button>
+
                 </td>
             </tr>
     </tbody>
