@@ -1,0 +1,33 @@
+<jumbotron class="text-center">
+    <h1>Assign Candidate</h1>
+    <h1>Job Id: <%= id %></h1>
+</jumbotron>
+
+<form action="/jobs/assignCandidate/<%= id %>" method="POST">
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Candidate Name</th>
+                <th>Contact Number</th>
+                <th>Assign Candidate</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% for (var candidate of candidates) { %>
+                <tr>
+                    <td><a href="/candidates/<%= candidate['_id']%>"><%= candidate.name %></a></td>
+                    <td><%= candidate.phone%></td>
+                    <div class="form-group">
+                        <td><input type="radio" name="candidates" value="<%= candidate['_id']%>"> Assign Candidate<br></td>
+                    </div>
+                </tr>
+
+            <% } %>
+        </tbody>
+    </table>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-success btn-lg">Assign Candidate(s)</button>
+    </div>
+</form>
