@@ -19,6 +19,7 @@
 
             <!-- choose the employer -->
             <div class="form-group">
+                <label>Employer</label>
                 <span class="dropdown">
                     <select name="company" class="custom-dropdown__select custom-dropdown__select--white">
                         <% for (var employer of employers){%>
@@ -57,6 +58,7 @@
 
             <!-- choose the requirements for the job -->
             <div class="form-group">
+                <label>Requirements</label>
                 <ul name="items">
                      <li onclick="this.parentNode.removeChild(this);">
                      <input type="hidden" name="requirements" value="PHP" />PHP</li>

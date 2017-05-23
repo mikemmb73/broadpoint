@@ -4,7 +4,6 @@ const Job = require('../models/jobs');
 module.exports = {
     showEmployers: showEmployers,
     showOneEmployer: showOneEmployer,
-    seedEmployers: seedEmployers,
     addEmployer: addEmployer,
     processAddEmployer: processAddEmployer
 }
@@ -32,30 +31,13 @@ function showOneEmployer (req, res){
         const employerName = employer.name;
         Job.find({employer: employerName}, (err, jobs)=> {
             if(err){
-                res.render('pages/single', {employer: employer, jobs: {}});
+                res.render('pages/singleEmployer', {employer: employer, jobs: {}});
             }
 
-            res.render('pages/single', {employer: employer, jobs: jobs});
+            res.render('pages/singleEmployer', {employer: employer, jobs: jobs});
         });
     });
 
-}
-
-
-// seed our db
-function seedEmployers (req, res) {
-    // create events
-    const employers = [
-        {name: "Cobal Network Solutions", phone: "2066968408", address: "1920 Blenheim"},
-        {name: "Broadpoint Group", phone: "2063245226", address:  "capitol hill"}
-    ];
-    // use the event model to insert/save
-    for (employer of employers){
-        var newEmployer = new Employer(employer);
-        newEmployer.save();
-    }
-
-    res.send("database seeded");
 }
 
 function addEmployer (req, res) {
