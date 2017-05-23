@@ -11,7 +11,8 @@ const candidateSchema = new Schema({
         previousSlug: String,
         pay: String,
         abilities: [String],
-        leads: [String]
+        leads: [String],
+        leadIds: [String]
 });
 
 //middleware ------------------------------------------------------------

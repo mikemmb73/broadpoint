@@ -9,6 +9,7 @@
             <tr>
                 <th>Candidate Name</th>
                 <th>Contact Number</th>
+                <th>Candidate Skills</th>
                 <th>Assign Candidate</th>
             </tr>
         </thead>
@@ -18,8 +19,13 @@
                 <tr>
                     <td><a href="/candidates/<%= candidate['_id']%>"><%= candidate.name %></a></td>
                     <td><%= candidate.phone%></td>
+                    <td>
+                        <% for (var i = 0; i < candidate.abilities.length; i++){%>
+                            <li><%= candidate.abilities[i] %></li>
+                        <% } %>
+                    </td>
                     <div class="form-group">
-                        <td><input type="radio" name="candidates" value="<%= candidate['_id']%>"> Assign Candidate<br></td>
+                        <td><input type="radio" name="candidates" value="<%= candidate['_id']%>"> Assign Candidate <br></td>
                     </div>
                 </tr>
 

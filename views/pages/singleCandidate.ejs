@@ -25,7 +25,7 @@
                 <% } %>
             </td>
             <td><% for (var i = 0; i < candidate.leads.length; i++){%>
-                <li><%= candidate.leads[i] %></li>
+                <li><a href="/jobs/<%= candidate.leadIds[i] %>"><%= candidate.leads[i] %></a></li>
                 <% } %>
             </td>
         </tr>

@@ -146,15 +146,24 @@ function processAssignCandidate (req,res) {
     }else {
         Candidate.findOne({_id: recievedCandidates}, (err3, thisCandidateObj) => {
             Job.findOne({_id: req.params.id}, (err,job) => {
+                thisCandidateObj.leads.push(job.name);
+                thisCandidateObj.leadIds.push(req.params.id);
                 job.candidates.push(thisCandidateObj.name);
                 job.candidateId.push(recievedCandidates);
                 job.save((err3) => {
+                    thisCandidateObj.save((err4) => {
+                        if (err4)
+                            console.log(err4);
+                    });
                     if(err3)
                         console.log(err3);
                     console.log("Assinged Candidate " + recievedCandidates);
                     res.redirect('/jobs/' + job['_id']);
                 });
+
             });
+
         });
+
     }
 }
