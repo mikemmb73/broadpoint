@@ -64,9 +64,12 @@ router.post('/candidates/addCandidate', candidateController.processAddCandidate)
     // job API
     router.route('/api/jobs')
         .get(jobsAPIController.getJobs)
+        .post(jobsAPIController.createJob);
 
     router.route('/api/jobs/:jobId')
-        .get(jobsAPIController.getOneJob);
+        .get(jobsAPIController.getOneJob)
+        .delete(jobsAPIController.deleteJob)
+        .put(jobsAPIController.updateJob);
 
 
 //slug based routes that have to be at the end

@@ -25,6 +25,7 @@ function createCandidate (req,res) {
         //this should be an array of predefined items from the 'requirements' collection
         abilities: JSON.parse(req.body.abilities)
     });
+
     //I should write middleware to verify all of the information above is valid
     console.log(req.body.abilities);
     //save the candidate
@@ -120,11 +121,12 @@ function updateCandidate (req,res) {
                 res.json([{message: "No value for leadId field found"}]);
             }
 
+
             //same thing as above but for skills/abilities
             if (req.body.ability != null){
                 if (typeof(req.body.ability) != "object"){
                     //add the lead and the leadId to the respective arrays
-                    fieldsChanged.push("leads");
+                    fieldsChanged.push("ability");
                     candidate.abilities.push(req.body.ability);
                 }else{
                     res.json([{message: "Can not add more than 1 ability at a time"}]);
