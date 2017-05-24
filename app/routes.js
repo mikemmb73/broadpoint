@@ -37,13 +37,16 @@ router.get('/api', function(req, res) {
 router.route('/api/employers')
     //post route
     .post(employersAPIController.createEmployer)
-    //get route
+    //get all route
     .get(employersAPIController.getEmployers);
 
 //single employer API routes
-
 router.route('/api/employers/:employerSlug')
     .get(employersAPIController.getOneEmployer)
+    .put(employersAPIController.updateEmployer)
+    .delete(employersAPIController.deleteEmployer);
+
+
 
 
 //slug based routes that have to be at the end

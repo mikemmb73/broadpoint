@@ -12,6 +12,7 @@ const express = require('express'),
 //config app ====================
 // tell express where to look for static assets
 app.use(express.static(__dirname + '/public'));
+//yes
 
 // set ejs
 app.set('view engine', 'ejs');
