@@ -27,6 +27,11 @@ router.get('/candidates', candidateController.showCandidates);
 router.get('/candidates/addCandidate', candidateController.addCandidate);
 router.post('/candidates/addCandidate', candidateController.processAddCandidate);
 
+//api routes
+router.get('/api', function(req, res) {
+    res.json({ message: 'hooray! welcome to our api!' });
+});
+
 //slug based routes that have to be at the end
 router.get('/jobs/assignCandidate/:id', candidateController.assignCandidate);
 router.post('/jobs/assignCandidate/:id', candidateController.processAssignCandidate);

@@ -19,6 +19,7 @@ app.use(expressLayouts)
 
 //use bodyParser to accpet forms
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 //connect to our database
 mongoose.connect("mongodb://admin:password@ds064299.mlab.com:64299/broadpoint");
