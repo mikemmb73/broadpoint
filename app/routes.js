@@ -1,16 +1,19 @@
 //create express router
 const express = require('express'),
-        router = express.Router(),
-        mainController = require('./controllers/main.controller'),
-        jobsController = require('./controllers/jobs.controller'),
-        candidateController = require('./controllers/candidates.controller'),
-        employersController = require('./controllers/employers.controller'),
-        employersAPIController = require('./controllers/api/employers.api.controller')
+    router                  = express.Router(),
+    mainController          = require('./controllers/main.controller'),
+    jobsController          = require('./controllers/jobs.controller'),
+    candidateController     = require('./controllers/candidates.controller'),
+    employersController     = require('./controllers/employers.controller'),
+    employersAPIController  = require('./controllers/api/employers.api.controller'),
+    candidatesAPIController = require('./controllers/api/candidates.api.controller');
+
 
 //export router so the other files can grab it
 module.exports = router;
 
 //define routes
+//main route
 router.get('/', mainController.showHome);
 
 //job routes
@@ -33,20 +36,23 @@ router.get('/api', function(req, res) {
     res.json({ message: 'hooray! welcome to our api!' });
 });
 
-//employer API routes
+// employer API routes
 router.route('/api/employers')
     //post route
     .post(employersAPIController.createEmployer)
     //get all route
     .get(employersAPIController.getEmployers);
 
-//single employer API routes
+// single employer API routes
 router.route('/api/employers/:employerSlug')
     .get(employersAPIController.getOneEmployer)
     .put(employersAPIController.updateEmployer)
     .delete(employersAPIController.deleteEmployer);
 
-
+// candidate api
+router.route('/api/candidates')
+    .post(candidatesAPIController.createCandidate)
+    .get(candidatesAPIController.getCandidates);
 
 
 //slug based routes that have to be at the end

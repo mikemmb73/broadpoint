@@ -19,7 +19,7 @@
             <td><%= candidate.phone %></td>
             <td><%= candidate.email %></td>
             <td><%= candidate.address %></td>
-            <td><a href="/employers/<%= candidate.previousSlug%>"><%= candidate.previous %></a></td>
+            <td><a href="/employers/<%= candidate.previousSlug%>"><%= candidate.previousEmployer %></a></td>
             <td><% for (var i = 0; i < candidate.abilities.length; i++){%>
                 <li><%= candidate.abilities[i] %></li>
                 <% } %>
