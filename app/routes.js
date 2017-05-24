@@ -55,7 +55,8 @@ router.route('/api/candidates')
     .get(candidatesAPIController.getCandidates);
 
 router.route('/api/candidates/:candidateId')
-    .get(candidatesAPIController.getOneCandidate);
+    .get(candidatesAPIController.getOneCandidate)
+    .put(candidatesAPIController.updateCandidate);
 
 
 //slug based routes that have to be at the end
