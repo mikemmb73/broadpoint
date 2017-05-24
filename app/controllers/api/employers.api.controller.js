@@ -5,6 +5,7 @@ const Job = require('../../models/jobs');
 module.exports = {
     createEmployer: createEmployer,
     getEmployers  : getEmployers,
+    getOneEmployer: getOneEmployer
 }
 
 function createEmployer(req,res) {
