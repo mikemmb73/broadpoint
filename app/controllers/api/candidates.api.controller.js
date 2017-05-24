@@ -5,7 +5,8 @@ const Candidate = require('../../models/candidates');
 
 module.exports = {
         createCandidate: createCandidate,
-        getCandidates: getCandidates
+        getCandidates: getCandidates,
+        getOneCandidate: getOneCandidate
 }
 
 function createCandidate (req,res) {
@@ -39,5 +40,16 @@ function getCandidates (req,res) {
 
         //send the response as json
         res.json(candidates);
+    });
+}
+
+function getOneCandidate (req,res) {
+    //find the candidate identified by the url
+    Candidate.findById(req.params.candidateId, function(err, candidate) {
+        if (err)
+            res.send(err);
+
+        //send the response as json
+        res.json(candidate);
     });
 }

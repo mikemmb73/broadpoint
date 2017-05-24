@@ -54,6 +54,9 @@ router.route('/api/candidates')
     .post(candidatesAPIController.createCandidate)
     .get(candidatesAPIController.getCandidates);
 
+router.route('/api/candidates/:candidateId')
+    .get(candidatesAPIController.getOneCandidate);
+
 
 //slug based routes that have to be at the end
 router.get('/jobs/assignCandidate/:id', candidateController.assignCandidate);
