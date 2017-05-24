@@ -1,11 +1,10 @@
 //this file holds all the code for the API in relation to employers
-const Employer = require('../models/employers');
-const Job = require('../models/jobs');
+const Employer = require('../../models/employers');
+const Job = require('../../models/jobs');
 
 module.exports = {
-    showEmployers: showEmployers,
     createEmployer: createEmployer,
-    processAddEmployer: processAddEmployer
+    getEmployers  : getEmployers,
 }
 
 function createEmployer(req,res) {
@@ -22,6 +21,29 @@ function createEmployer(req,res) {
         if(err)
             res.send(err);
 
-        res.json({ message: 'Bear created!'
+        res.json({ message: 'Employer ' + employer.name + ' created!'});
     });
+}
+
+//find all the employers and send them back in json
+function getEmployers (req, res) {
+    //find all of the employers
+    Employer.find(function(err, employers) {
+        if (err)
+            res.send(err);
+
+        res.json(employers);
+    });
+}
+
+// single employer routes ------------------------------------------------------
+function getOneEmployer (req, res){
+    Employer.findOne({slug: req.params.employerSlug}, (err,employer) => {
+        if(err){
+            res.send(err);
+        }
+        //send the data as a JSON object
+        res.json(employer);
+    });
+
 }

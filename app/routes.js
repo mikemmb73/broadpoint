@@ -4,7 +4,8 @@ const express = require('express'),
         mainController = require('./controllers/main.controller'),
         jobsController = require('./controllers/jobs.controller'),
         candidateController = require('./controllers/candidates.controller'),
-        employersController = require('./controllers/employers.controller');
+        employersController = require('./controllers/employers.controller'),
+        employersAPIController = require('./controllers/api/employers.api.controller')
 
 //export router so the other files can grab it
 module.exports = router;
@@ -27,10 +28,23 @@ router.get('/candidates', candidateController.showCandidates);
 router.get('/candidates/addCandidate', candidateController.addCandidate);
 router.post('/candidates/addCandidate', candidateController.processAddCandidate);
 
-//api routes
+// API BASED ROUTES ------------------------------------------------------------
 router.get('/api', function(req, res) {
     res.json({ message: 'hooray! welcome to our api!' });
 });
+
+//employer API routes
+router.route('/api/employers')
+    //post route
+    .post(employersAPIController.createEmployer)
+    //get route
+    .get(employersAPIController.getEmployers);
+
+//single employer API routes
+
+router.route('/api/employers/:employerSlug')
+    .get(employersAPIController.getOneEmployer)
+
 
 //slug based routes that have to be at the end
 router.get('/jobs/assignCandidate/:id', candidateController.assignCandidate);
