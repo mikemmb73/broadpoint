@@ -9,7 +9,8 @@ module.exports = {
         createCandidate: createCandidate,
         getCandidates: getCandidates,
         getOneCandidate: getOneCandidate,
-        updateCandidate: updateCandidate
+        updateCandidate: updateCandidate,
+        deleteCandidate: deleteCandidate
 }
 
 function createCandidate (req,res) {
@@ -180,5 +181,17 @@ function updateCandidate (req,res) {
             result = null;
             res.json([{message: 'Candidate updated!'},{fieldsChanged}]);
         }
+    });
+}
+
+//delete candidate
+
+function deleteCandidate (req, res) {
+    //find the employer by the slug
+    Candidate.remove({_id: req.params.candidateId}, (err, candidate) => {
+        if (err)
+            res.send(err);
+        //respond saying the employer was successfully deleted
+        res.json({ message: 'Candidate successfully deleted' });
     });
 }
