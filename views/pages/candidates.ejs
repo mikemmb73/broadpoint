@@ -1,0 +1,35 @@
+<div class="jumbotron text-center">
+    <h1>All Candidates</h1>
+</div>
+
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th>Canidate Name</th>
+            <th>Phone Number</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Previous Employer</th>
+            <th>Areas of Knowledge</th>
+            <th>Leads</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% for (var candidate of candidates) { %>
+            <tr>
+                <td><a href="/candidates/<%= candidate['_id']%>"><%= candidate.name %></a></td>
+                <td><%= candidate.phone %></td>
+                <td><%= candidate.email %></td>
+                <td><%= candidate.address %></td>
+                <td><a href="/employers/<%= candidate.previousSlug%>"><%= candidate.previous %></a></td>
+                <td><% for (var i = 0; i < candidate.abilities.length; i++){%>
+                    <li><%= candidate.abilities[i] %></li>
+                    <% } %>
+                </td>
+                <td></td>
+            </tr>
+
+        <% } %>
+    </tbody>
+</table>

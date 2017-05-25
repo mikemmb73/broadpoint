@@ -12,7 +12,8 @@ const jobSchema = new Schema({
         },
         description: String,
         requirements: [String],
-        candidates: [String]
+        candidates: [String],
+        candidateId: [String]
 });
 
 //middleware ---------------

@@ -1,19 +1,8 @@
-<!-- header -->
-<header id="site-header">
-    <div class="navbar navbar-inverse">
-        <div class="container">
-            <div class="navbar-header">
-                <a href="/" class="navbar-brand">Broadpoint</a>
-                <a href="/employers/<%= employer.slug %>" class="navbar-brand"><%= employer.name %></a>
-                <a href="/jobs/<%= job['_id']%>" class="navbar-brand"><%= job.name %></a>
-            </div>
-        </div>
-    </div>
-</header>
-
-
-<h1><%= job.name %></h1>
-<p><%= employer.name %></p>
+<div class="jumbotron text-center">
+    <h1><%= employer.name %></h1>
+    <p><%= employer.phone %> || <%= employer.address %></p>
+    <p><%= employer.description %></p>
+</div>
 <table class="table table-bordered table-hover table-striped">
     <thead>
         <tr>
@@ -25,6 +14,7 @@
     </thead>
 
     <tbody>
+        <% for (var job of jobs) { %>
             <tr>
                 <td><a href="/jobs/<%= job['_id']%>"><%= job.name %></a></td>
                 <td><%= job.description%></td>
@@ -34,9 +24,12 @@
                 <td><% for (var i = 0; i < job.candidates.length; i++){%>
                     <li><a href="/candidates/<%= job.candidateId[i]%>"><%= job.candidates[i] %></a></li>
                     <% } %>
+
                     <a href="/jobs/assignCandidate/<%=job['_id']%>" class="btn btn-success" name="assignCandidate">Assign Candidate</button>
 
                 </td>
             </tr>
+
+        <% } %>
     </tbody>
 </table>

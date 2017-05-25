@@ -2,7 +2,8 @@
 const express = require('express'),
         router = express.Router(),
         mainController = require('./controllers/main.controller'),
-        jobsController = require('./controllers/jobs.controller')
+        jobsController = require('./controllers/jobs.controller'),
+        candidateController = require('./controllers/candidates.controller'),
         employersController = require('./controllers/employers.controller');
 
 //export router so the other files can grab it
@@ -18,10 +19,17 @@ router.post('/jobs/addJob', jobsController.processAddJob);
 
 //employer routes
 router.get('/employers', employersController.showEmployers);
-router.get('/employers/seed', employersController.seedEmployers);
 router.get('/employers/addEmployer', employersController.addEmployer);
 router.post('/employers/addEmployer', employersController.processAddEmployer);
 
+//candidate routes
+router.get('/candidates', candidateController.showCandidates);
+router.get('/candidates/addCandidate', candidateController.addCandidate);
+router.post('/candidates/addCandidate', candidateController.processAddCandidate);
+
 //slug based routes that have to be at the end
+router.get('/jobs/assignCandidate/:id', candidateController.assignCandidate);
+router.post('/jobs/assignCandidate/:id', candidateController.processAssignCandidate);
 router.get('/employers/:slug', employersController.showOneEmployer);
 router.get('/jobs/:id', jobsController.singleJob);
+router.get('/candidates/:id', candidateController.showSingleCandidate);
