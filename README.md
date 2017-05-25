@@ -5,5 +5,5 @@ Talent management software built with node
 
 Use Postman Basic Auth to authenticate requests
 
-username: mike
-password: broadpoint
+email: test@test.com
+password: password

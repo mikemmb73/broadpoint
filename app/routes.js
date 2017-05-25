@@ -2,7 +2,6 @@
 const express = require('express'),
     //auth require
     passport                = require('passport'),
-    authController          = require('./controllers/auth');
 
     //routes and such
     router                  = express.Router(),
@@ -11,9 +10,13 @@ const express = require('express'),
     candidateController     = require('./controllers/candidates.controller'),
     employersController     = require('./controllers/employers.controller'),
     employersAPIController  = require('./controllers/api/employers.api.controller'),
-    candidatesAPIController = require('./controllers/api/candidates.api.controller');
-    jobsAPIController       = require('./controllers/api/jobs.api.controller');
-    userController          = require('./controllers/users.controller');
+    candidatesAPIController = require('./controllers/api/candidates.api.controller'),
+    jobsAPIController       = require('./controllers/api/jobs.api.controller'),
+    userController          = require('./controllers/users.controller'),
+    loginController         = require('./controllers/login.controller');
+
+//authController is for API
+//loginController is for frontend
 
 
 //export router so the other files can grab it
@@ -21,22 +24,22 @@ module.exports = router;
 
 //define routes
 //main route
-router.get('/', mainController.showHome);
+router.get('/', isLoggedIn, mainController.showHome);
 
 //job routes
-router.get('/jobs', authController.isAuthenticated, jobsController.showJobs);
-router.get('/jobs/addJob', authController.isAuthenticated, jobsController.addJob);
-router.post('/jobs/addJob', authController.isAuthenticated, jobsController.processAddJob);
+router.get('/jobs', isLoggedIn, jobsController.showJobs);
+router.get('/jobs/addJob', isLoggedIn, jobsController.addJob);
+router.post('/jobs/addJob', isLoggedIn, jobsController.processAddJob);
 
 //employer routes
-router.get('/employers', authController.isAuthenticated, employersController.showEmployers);
-router.get('/employers/addEmployer', authController.isAuthenticated, employersController.addEmployer);
-router.post('/employers/addEmployer', authController.isAuthenticated, employersController.processAddEmployer);
+router.get('/employers', isLoggedIn, employersController.showEmployers);
+router.get('/employers/addEmployer', isLoggedIn, employersController.addEmployer);
+router.post('/employers/addEmployer', isLoggedIn, employersController.processAddEmployer);
 
 //candidate routes
-router.get('/candidates', authController.isAuthenticated, candidateController.showCandidates);
-router.get('/candidates/addCandidate', authController.isAuthenticated, candidateController.addCandidate);
-router.post('/candidates/addCandidate', authController.isAuthenticated, candidateController.processAddCandidate);
+router.get('/candidates', isLoggedIn, candidateController.showCandidates);
+router.get('/candidates/addCandidate', isLoggedIn, candidateController.addCandidate);
+router.post('/candidates/addCandidate', isLoggedIn, candidateController.processAddCandidate);
 
 // API BASED ROUTES ------------------------------------------------------------
     router.get('/api', function(req, res) {
@@ -46,46 +49,75 @@ router.post('/candidates/addCandidate', authController.isAuthenticated, candidat
     // employer API routes
     router.route('/api/employers')
         //post route
-        .post(authController.isAuthenticated, employersAPIController.createEmployer)
+        .post(employersAPIController.createEmployer)
         //get all route
-        .get(authController.isAuthenticated, employersAPIController.getEmployers);
+        .get(employersAPIController.getEmployers);
 
     // single employer API routes
     router.route('/api/employers/:employerSlug')
-        .get(authController.isAuthenticated, employersAPIController.getOneEmployer)
-        .put(authController.isAuthenticated, employersAPIController.updateEmployer)
-        .delete(authController.isAuthenticated, employersAPIController.deleteEmployer);
+        .get(employersAPIController.getOneEmployer)
+        .put(employersAPIController.updateEmployer)
+        .delete(employersAPIController.deleteEmployer);
 
     // candidate API
     router.route('/api/candidates')
-        .post(authController.isAuthenticated, candidatesAPIController.createCandidate)
-        .get(authController.isAuthenticated, candidatesAPIController.getCandidates);
+        .post(candidatesAPIController.createCandidate)
+        .get(candidatesAPIController.getCandidates);
 
     router.route('/api/candidates/:candidateId')
-        .get(authController.isAuthenticated, candidatesAPIController.getOneCandidate)
-        .put(authController.isAuthenticated, candidatesAPIController.updateCandidate)
-        .delete(authController.isAuthenticated, candidatesAPIController.deleteCandidate);
+        .get(candidatesAPIController.getOneCandidate)
+        .put(candidatesAPIController.updateCandidate)
+        .delete(candidatesAPIController.deleteCandidate);
 
     // job API
     router.route('/api/jobs')
-        .get(authController.isAuthenticated, jobsAPIController.getJobs)
-        .post(authController.isAuthenticated, jobsAPIController.createJob);
+        .get(jobsAPIController.getJobs)
+        .post(jobsAPIController.createJob);
 
     router.route('/api/jobs/:jobId')
-        .get(authController.isAuthenticated, jobsAPIController.getOneJob)
-        .delete(authController.isAuthenticated, jobsAPIController.deleteJob)
-        .put(authController.isAuthenticated, jobsAPIController.updateJob);
+        .get(jobsAPIController.getOneJob)
+        .delete(jobsAPIController.deleteJob)
+        .put(jobsAPIController.updateJob);
 
 //user routes
 // Create endpoint handlers for /users
 router.route('/users')
-  .post(authController.isAuthenticated, userController.postUsers)
-  .get(authController.isAuthenticated, userController.getUsers);
+  .post(userController.postUsers)
+  .get(userController.getUsers);
+
+//login routes
+router.get('/login', loginController.login);
+router.get('/signup', loginController.signup);
+router.get('/logout', loginController.logout);
+router.get('/profile', isLoggedIn, loginController.profile);
+//post login routes
+router.post('/login', passport.authenticate('local-login', {
+        successRedirect : '/profile', // redirect to the secure profile section
+        failureRedirect : '/login', // redirect back to the signup page if there is an error
+        failureFlash : true // allow flash messages
+}));
+
+router.post('/signup', passport.authenticate('local-signup', {
+        successRedirect : '/profile', // redirect to the secure profile section
+        failureRedirect : '/signup', // redirect back to the signup page if there is an error
+        failureFlash : true // allow flash messages
+}));
 
 
 //slug based routes that have to be at the end
-router.get('/jobs/assignCandidate/:id', authController.isAuthenticated, candidateController.assignCandidate);
-router.post('/jobs/assignCandidate/:id', authController.isAuthenticated, candidateController.processAssignCandidate);
-router.get('/employers/:slug', authController.isAuthenticated, employersController.showOneEmployer);
-router.get('/jobs/:id', authController.isAuthenticated, jobsController.singleJob);
-router.get('/candidates/:id', authController.isAuthenticated, candidateController.showSingleCandidate);
+router.get('/jobs/assignCandidate/:id',   candidateController.assignCandidate);
+router.post('/jobs/assignCandidate/:id',   candidateController.processAssignCandidate);
+router.get('/employers/:slug',   employersController.showOneEmployer);
+router.get('/jobs/:id',   jobsController.singleJob);
+router.get('/candidates/:id',   candidateController.showSingleCandidate);
+
+// route middleware to make sure a user is logged in
+function isLoggedIn(req, res, next) {
+
+    // if user is authenticated in the session, carry on
+    if (req.isAuthenticated())
+        return next();
+
+    // if they aren't redirect them to the home page
+    res.redirect('/login');
+}

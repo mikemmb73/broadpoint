@@ -1,6 +1,3 @@
-require('dotenv').config();
-
-
 //dependecies
 const express = require('express'),
         app             = express(),
@@ -11,6 +8,9 @@ const express = require('express'),
         flash           = require('connect-flash'),
         passport        = require('passport');
         session         = require('express-session');
+
+require('dotenv').config();
+require('./app/config/passport')(passport);
 
 //config app ====================
 // tell express where to look for static assets
@@ -27,6 +27,7 @@ app.use(session({ secret: 'broadbroadbroadpoint' })); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
+
 
 //use bodyParser to accpet forms
 app.use(bodyParser.urlencoded({extended: true}));
