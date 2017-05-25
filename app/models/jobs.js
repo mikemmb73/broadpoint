@@ -6,21 +6,22 @@ const jobSchema = new Schema({
         name: String,
         employer: String,
         employerSlug: String,
-        slug: {
-                type: String,
-                unique: false
-        },
         description: String,
         requirements: [String],
         candidates: [String],
         candidateId: [String]
 });
 
+/*slug: {
+        type: String,
+        unique: false
+},*/
+
 //middleware ---------------
 
 //make sure the slug is created from the name
 jobSchema.pre('save', function(next) {
-        this.slug = slugify(this.employer + "-" + this.name);
+        //this.slug = slugify(this.employer + "-" + this.name);
         this.employerSlug = slugify(this.employer);
         next();
 });

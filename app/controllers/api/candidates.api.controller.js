@@ -14,6 +14,21 @@ module.exports = {
 }
 
 function createCandidate (req,res) {
+    if (req.body.name == null){
+        res.json([{message: "Name required to create new job"}]);
+    }
+
+    var abilitiesData;
+    if (req.body.abilities != null && req.body.abilities != ""){
+        try {
+            abilitiesData = JSON.parse(req.body.abilities);
+        }catch(err) {
+            res.json([{message: "Invalid JSON Data!"}]);
+        }
+    //if this field is empty format it correctly
+    }else {
+        abilitiesData = [];
+    }
     const candidate = new Candidate({
         name: req.body.name,
         address: req.body.address,
@@ -23,8 +38,9 @@ function createCandidate (req,res) {
         previousEmployer: req.body.previousEmployer,
         pay: req.body.pay,
         //this should be an array of predefined items from the 'requirements' collection
-        abilities: JSON.parse(req.body.abilities)
+        abilities: abilitiesData
     });
+
     //I should write middleware to verify all of the information above is valid
     console.log(req.body.abilities);
     //save the candidate
@@ -32,7 +48,7 @@ function createCandidate (req,res) {
         if(err)
             res.send(err);
 
-        res.json([{message: "Candidate created!"}]);
+        res.json([{message: "Candidate created!"}, {id: candidate["_id"]}]);
     });
 }
 
@@ -120,11 +136,12 @@ function updateCandidate (req,res) {
                 res.json([{message: "No value for leadId field found"}]);
             }
 
+
             //same thing as above but for skills/abilities
             if (req.body.ability != null){
                 if (typeof(req.body.ability) != "object"){
                     //add the lead and the leadId to the respective arrays
-                    fieldsChanged.push("leads");
+                    fieldsChanged.push("ability");
                     candidate.abilities.push(req.body.ability);
                 }else{
                     res.json([{message: "Can not add more than 1 ability at a time"}]);
