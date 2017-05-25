@@ -14,6 +14,21 @@ module.exports = {
 }
 
 function createCandidate (req,res) {
+    if (req.body.name == null){
+        res.json([{message: "Name required to create new job"}]);
+    }
+
+    var abilitiesData;
+    if (req.body.abilities != null && req.body.abilities != ""){
+        try {
+            abilitiesData = JSON.parse(req.body.abilities);
+        }catch(err) {
+            res.json([{message: "Invalid JSON Data!"}]);
+        }
+    //if this field is empty format it correctly
+    }else {
+        abilitiesData = [];
+    }
     const candidate = new Candidate({
         name: req.body.name,
         address: req.body.address,
@@ -23,7 +38,7 @@ function createCandidate (req,res) {
         previousEmployer: req.body.previousEmployer,
         pay: req.body.pay,
         //this should be an array of predefined items from the 'requirements' collection
-        abilities: JSON.parse(req.body.abilities)
+        abilities: abilitiesData
     });
 
     //I should write middleware to verify all of the information above is valid
