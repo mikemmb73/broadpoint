@@ -45,6 +45,9 @@ function deleteJob (req,res) {
 }
 
 function updateJob (req,res){
+    //this variable tracks changes in the update request
+    var fieldsChanged = [];
+
     Job.findById(req.params.jobId, function(err,job){
         if (req.body.name != null){
             fieldsChanged.push("Name");
@@ -82,13 +85,31 @@ function updateJob (req,res){
 }
 
 function createJob (req,res){
+    //check if this job has the basic data
+    if (req.body.name == null || req.body.employer == null){
+        res.json([{message: "Name and Employer data required to create new job"}]);
+    }
+    //confirm the json is valid for requirements
+    var requirementsData;
+    if (req.body.requirements != null && req.body.requirements != ""){
+        try {
+            requirementsData = JSON.parse(req.body.requirements);
+        }catch(err) {
+            res.json([{message: "Invalid JSON Data!"}]);
+        }
+    //if this field is empty format it correctly
+    }else {
+        requirementsData = [];
+    }
+
     const job = new Job({
         name: req.body.name,
         //this should be verified at some point
         employer: req.body.employer,
         description: req.body.description,
         //this should be an array of predefined items from the 'requirements' collection
-        requirements: JSON.parse(req.body.requirements)
+        requirements: requirementsData
+
     });
 
     //I should write middleware to verify all of the information above is valid
@@ -98,6 +119,6 @@ function createJob (req,res){
         if(err)
             res.send(err);
 
-        res.json([{message: "Job created!"}]);
+        res.json([{message: "Job created!"}, {id: job["_id"]}]);
     });
 }

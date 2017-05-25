@@ -33,7 +33,7 @@ function createCandidate (req,res) {
         if(err)
             res.send(err);
 
-        res.json([{message: "Candidate created!"}]);
+        res.json([{message: "Candidate created!"}, {id: candidate["_id"]}]);
     });
 }
 
