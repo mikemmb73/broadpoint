@@ -17,7 +17,12 @@ const candidateSchema = new Schema({
 
 //middleware ------------------------------------------------------------
 candidateSchema.pre('save', function(next) {
-        this.previousSlug = slugify(this.previousEmployer);
+        //when saving the candidate for updates this doesnt always work
+        try {
+            this.previousSlug = slugify(this.previousEmployer);
+        } catch(err){
+            console.log(err);
+        }
         next();
 });
 
