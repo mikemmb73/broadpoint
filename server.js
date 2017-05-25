@@ -12,6 +12,7 @@ const express = require('express'),
 //config app ====================
 // tell express where to look for static assets
 app.use(express.static(__dirname + '/public'));
+//yes
 
 // set ejs
 app.set('view engine', 'ejs');
@@ -19,6 +20,7 @@ app.use(expressLayouts)
 
 //use bodyParser to accpet forms
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 //connect to our database
 mongoose.connect("mongodb://admin:password@ds064299.mlab.com:64299/broadpoint");

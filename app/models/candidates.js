@@ -7,7 +7,7 @@ const candidateSchema = new Schema({
         address: String,
         phone: String,
         email: String,
-        previous: String,
+        previousEmployer: String,
         previousSlug: String,
         pay: String,
         abilities: [String],
@@ -17,7 +17,7 @@ const candidateSchema = new Schema({
 
 //middleware ------------------------------------------------------------
 candidateSchema.pre('save', function(next) {
-        this.previousSlug = slugify(this.previous);
+        this.previousSlug = slugify(this.previousEmployer);
         next();
 });
 

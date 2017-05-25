@@ -1,15 +1,21 @@
 //create express router
 const express = require('express'),
-        router = express.Router(),
-        mainController = require('./controllers/main.controller'),
-        jobsController = require('./controllers/jobs.controller'),
-        candidateController = require('./controllers/candidates.controller'),
-        employersController = require('./controllers/employers.controller');
+    router                  = express.Router(),
+    mainController          = require('./controllers/main.controller'),
+    jobsController          = require('./controllers/jobs.controller'),
+    candidateController     = require('./controllers/candidates.controller'),
+    employersController     = require('./controllers/employers.controller'),
+    employersAPIController  = require('./controllers/api/employers.api.controller'),
+    candidatesAPIController = require('./controllers/api/candidates.api.controller');
+    jobsAPIController       = require('./controllers/api/jobs.api.controller');
+
+
 
 //export router so the other files can grab it
 module.exports = router;
 
 //define routes
+//main route
 router.get('/', mainController.showHome);
 
 //job routes
@@ -26,6 +32,45 @@ router.post('/employers/addEmployer', employersController.processAddEmployer);
 router.get('/candidates', candidateController.showCandidates);
 router.get('/candidates/addCandidate', candidateController.addCandidate);
 router.post('/candidates/addCandidate', candidateController.processAddCandidate);
+
+// API BASED ROUTES ------------------------------------------------------------
+    router.get('/api', function(req, res) {
+        res.json({ message: 'hooray! welcome to our api!' });
+    });
+
+    // employer API routes
+    router.route('/api/employers')
+        //post route
+        .post(employersAPIController.createEmployer)
+        //get all route
+        .get(employersAPIController.getEmployers);
+
+    // single employer API routes
+    router.route('/api/employers/:employerSlug')
+        .get(employersAPIController.getOneEmployer)
+        .put(employersAPIController.updateEmployer)
+        .delete(employersAPIController.deleteEmployer);
+
+    // candidate API
+    router.route('/api/candidates')
+        .post(candidatesAPIController.createCandidate)
+        .get(candidatesAPIController.getCandidates);
+
+    router.route('/api/candidates/:candidateId')
+        .get(candidatesAPIController.getOneCandidate)
+        .put(candidatesAPIController.updateCandidate)
+        .delete(candidatesAPIController.deleteCandidate);
+
+    // job API
+    router.route('/api/jobs')
+        .get(jobsAPIController.getJobs)
+        .post(jobsAPIController.createJob);
+
+    router.route('/api/jobs/:jobId')
+        .get(jobsAPIController.getOneJob)
+        .delete(jobsAPIController.deleteJob)
+        .put(jobsAPIController.updateJob);
+
 
 //slug based routes that have to be at the end
 router.get('/jobs/assignCandidate/:id', candidateController.assignCandidate);
