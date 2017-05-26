@@ -1,6 +1,7 @@
 <jumbotron class="text-center">
     <h1>Assign Candidate</h1>
     <h1>Job Id: <%= id %></h1>
+
 </jumbotron>
 
 <form action="/jobs/assignCandidate/<%= id %>" method="POST">
@@ -34,6 +35,8 @@
     </table>
 
     <div class="form-group">
-        <button type="submit" class="btn btn-success btn-lg">Assign Candidate(s)</button>
+        <button type="submit" class="col-xs-6 btn btn-success btn-lg">Assign Candidate(s)</button>
     </div>
+    <a href="/candidates/addCandidate" class="col-xs-6 btn btn-lg btn-danger pull-right">Add New Candidate</a>
+
 </form>

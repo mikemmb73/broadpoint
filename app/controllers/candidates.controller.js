@@ -69,7 +69,7 @@ function processAddCandidate (req,res) {
     candidate.save((err) => {
         if (err)
             throw err;
-        res.redirect(`/candidates`);
+        res.redirect(`/jobs`);
     });
 }
 
