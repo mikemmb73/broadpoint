@@ -204,11 +204,27 @@ function updateCandidate (req,res) {
 //delete candidate
 
 function deleteCandidate (req, res) {
-    //find the employer by the slug
+    //unlink this candidate from any jobs they may be linked to
+    Job.find({}, (err,jobs) => {
+        for (job of jobs){
+            var index = job.candidateId.indexOf(req.params.candidateId);
+            if (index > -1){
+                job.candidateId.splice(index, 1);
+                job.candidates.splice(index,1);
+                job.save((err2) => {
+                    if(err2)
+                        console.log(err2);
+                });
+            }
+        }
+
+    });
+
+    //remove the actual candidate
     Candidate.remove({_id: req.params.candidateId}, (err, candidate) => {
         if (err)
             res.send(err);
-        //respond saying the employer was successfully deleted
+        //respond saying the candidate was successfully deleted
         res.json({ message: 'Candidate successfully deleted' });
     });
 }
