@@ -13,7 +13,7 @@ module.exports = {
     assignCandidate: assignCandidate,
     processAssignCandidate: processAssignCandidate,
     showSingleCandidate: showSingleCandidate,
-    updateCandidate: updateCandidate,
+    processUpdateCandidate: processUpdateCandidate,
     deleteCandidate: deleteCandidate
 }
 
