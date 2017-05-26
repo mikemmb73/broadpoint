@@ -42,6 +42,7 @@ router.get('/candidates/addCandidate', isLoggedIn, candidateController.addCandid
 router.post('/candidates/addCandidate', isLoggedIn, candidateController.processAddCandidate);
 //get api endpoints (for html links)
 router.get('/candidates/delete/:candidateId', candidateController.deleteCandidate);
+router.get('/candidates/update/:candidateId', candidateController.updateCandidate);
 
 // API BASED ROUTES ------------------------------------------------------------
     router.get('/api', function(req, res) {

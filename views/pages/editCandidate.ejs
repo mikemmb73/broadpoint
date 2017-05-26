@@ -1,11 +1,11 @@
 <jumbotron class="text-center">
-    <h1>Add New Candidate</h1>
+    <h1>Update Candidate <%= candidate['_id'] %></h1>
 </jumbotron>
 
 <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
 
-        <form action="/candidates/addCandidate" method="POST">
+        <form action="/candidates/processUpdateCandidate" method="POST">
 
             <div class="form-group">
                 <label>Name</label>
